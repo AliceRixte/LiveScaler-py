@@ -14,5 +14,5 @@ transfo1 = Affine(4,5)
 transfo1.eval(np.array([1,2,3,4])) # the array is a vector of notes to be transformed
 transfo2 = Affine(5,6)
 composition = transfo1 >> transfo2
-composition.eval(6) # computes  transfo1(transfo1(6))
+composition.eval(6) # computes  transfo2(transfo1(6))
 ```
