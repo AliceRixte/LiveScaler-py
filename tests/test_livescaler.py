@@ -4,13 +4,14 @@
 
 import unittest
 
-from livescaler.livescaler import add
+import livescaler.livescaler as ls
 
 
 class TestLivescaler(unittest.TestCase):
 
-    def test_add(self):
-        self.assertEqual(add(3,3), 5)
+    def test_affine(self) : 
+        aff = ls.StdAffine.iii
+        self.assertEqual(aff.eval(4), -5)
 
 
 if __name__ == '__main__':
