@@ -5,18 +5,20 @@
 import unittest
 import numpy as np
 
-import livescaler.livescaler as ls
+from livescaler import StdAffine, Periodic
 
 
 class TestLivescaler(unittest.TestCase):
 
     def test_affine(self) : 
-        aff = ls.StdAffine.iii
+        aff = StdAffine.iii
         assert aff.eval(4) == -5
+        aff.anchor = 4
+        assert aff.eval(4) == 3
     
     def test_periodic(self) :
-        diff4 = ls.Periodic(np.array([0,1,2,3]),1)
-        inv4 = ls.Periodic(np.array([3,2,1,0]),3)
+        diff4 = Periodic(np.array([0,1,2,3]),1)
+        inv4 = Periodic(np.array([3,2,1,0]),3)
         comp = diff4 >> inv4
         assert comp.anchor == 3
         assert all(comp.period == np.array([5,5,1,1]))
