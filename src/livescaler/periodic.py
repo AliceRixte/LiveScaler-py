@@ -20,7 +20,7 @@ import numpy as np
 from .transform import Transform
 
 class Periodic(Transform) : 
-    """The Periodic class allows to declare periodic with respect to an intervam transformations. For more informations about these transformations, see section 2.2 of this paper https://jim2023.sciencesconf.org/data/pages/3_4_RIXTE.pdf (in french)."""
+    """! The Periodic class allows to declare periodic with respect to an intervam transformations. For more informations about these transformations, see section 2.2 of this paper https://jim2023.sciencesconf.org/data/pages/3_4_RIXTE.pdf (in french)."""
     def __init__(self, period, anchor = 0) : 
         """! The Affine initializer
         @param period A vector of the size of the base asigning to each value of the interval upon which the function is periodic the difference value. The period vector corresponds to f(x) - x where x belongs to [0, base-1], with base being the length of period.

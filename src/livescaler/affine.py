@@ -18,7 +18,7 @@
 from .transform import Transform
 
 class Affine(Transform): 
-    """The Affine class allows to declare affine transformations. For more informations about affine transformations, see section 2.3 of this paper https://jim2023.sciencesconf.org/data/pages/3_4_RIXTE.pdf (in french)."""
+    """! The Affine class allows to declare affine transformations. For more informations about affine transformations, see section 2.3 of this paper https://jim2023.sciencesconf.org/data/pages/3_4_RIXTE.pdf (in french)."""
     def __init__(self, mult, transp, anchor = 0, base = 12)  : 
         """! The Affine initializer
         @param mult The multiplicator coefficient of the affine transform
