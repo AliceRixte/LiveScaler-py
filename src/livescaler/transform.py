@@ -29,7 +29,7 @@ class Transform(ABC):
 
     @abstractmethod
     def eval_diff(self,arg) : 
-        """! Evaluates x - f(x), where f is this transform 
+        """! Evaluates f(x) - x, where f is this transform 
         
         @param arg The argument given to the transform. This can be eather a number or a numpy array."""
         pass

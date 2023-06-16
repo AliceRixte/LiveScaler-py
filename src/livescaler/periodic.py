@@ -30,7 +30,7 @@ class Periodic(Transform) :
 
 
     def eval_diff(self, arg) : 
-        """! Evaluates x - f(x), where f is this periodic transform 
+        """! Evaluates f(x) - x, where f is this periodic transform 
         
         @param arg The argument given to the periodic transform. This can be eather a number or a numpy array."""
         return self.period[(arg + self.anchor) % self.base]
