@@ -68,27 +68,34 @@ class StdAffine :
 
 
 class Periodic(Transform) : 
-    def __init__(self, period, anchor = 0, mult = 1, transp = 0) : 
+    def __init__(self, period, anchor = 0, affine = Affine(1,0)) : 
         super().__init__(anchor, len(period))
         self.period = period
+        self.affine = affine
 
     def eval_diff(self, arg) : 
-        return self.period[(arg + self.anchor) % self.base]
+        period_diff = self.period[(arg + self.anchor) % self.base]
+        return self.affine.eval_diff(period_diff)
     
     def __rshift__(self, other):
+        selfeval = self.eval_diff(np.arange(0, self.base))
+        shift_anchor = np.roll(selfeval, other.anchor)
+        try :
+            newperiod = shift_anchor  +  other.period
+            return Periodic(newperiod,other.anchor, other.affine)
+        except AttributeError : #this probably means that other.period doesn't exist
 
-        anchorshift = np.roll(self.period, other.anchor - self.anchor)
-        newperiod = anchorshift  +  other.period
-        return Periodic(newperiod,other.anchor)
+
+            
 
 
     def __str__(self) : 
         return f"[period : {self.period}, anchor : {self.anchor}, base : {self.base}]"
 
 diff4 = Periodic(np.array([0,1,2,3]),1)
-inv4 = Periodic(np.array([3,2,1,0]),3)
+inv4 = Periodic(np.array([3,2,1,0,4]),3)
 comp = diff4 >> inv4
-#diff4 >> StdAffine.I
+diff4 >> StdAffine.I
 
 
 
