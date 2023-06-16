@@ -16,3 +16,9 @@ transfo2 = Affine(5,6)
 composition = transfo1 >> transfo2
 composition.eval(6) # computes  transfo2(transfo1(6))
 ```
+
+## How to test
+
+```
+pytest
+```
