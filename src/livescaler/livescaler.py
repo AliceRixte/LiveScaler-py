@@ -68,7 +68,7 @@ class StdAffine :
 
 
 class Periodic(Transform) : 
-    def __init__(self, period, anchor = 0) : 
+    def __init__(self, period, anchor = 0, mult = 1, transp = 0) : 
         super().__init__(anchor, len(period))
         self.period = period
 
@@ -76,13 +76,31 @@ class Periodic(Transform) :
         return self.period[(arg + self.anchor) % self.base]
     
     def __rshift__(self, other):
-        if(self.base != other.base) :
-            raise ValueError("Can't compose two transformations with different base")
-        anchorshift =  other.anchor - self.anchor
-        newperiod = np.roll(self.period, anchorshift)  +  other.period
+
+        anchorshift = np.roll(self.period, other.anchor - self.anchor)
+        newperiod = anchorshift  +  other.period
         return Periodic(newperiod,other.anchor)
-    
+
+
     def __str__(self) : 
         return f"[period : {self.period}, anchor : {self.anchor}, base : {self.base}]"
-    
 
+diff4 = Periodic(np.array([0,1,2,3]),1)
+inv4 = Periodic(np.array([3,2,1,0]),3)
+comp = diff4 >> inv4
+#diff4 >> StdAffine.I
+
+
+
+""" class Empty :
+    attr = 1
+
+
+def test (one, other):
+    other.base
+    
+    if(one.base != other.base) :
+        raise ValueError("Can't compose two transformations with different base")
+        
+
+test(Empty,Empty) """
