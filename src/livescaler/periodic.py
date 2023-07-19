@@ -25,15 +25,17 @@ class Periodic(Transform) :
         """! The Affine initializer
         @param period A vector of the size of the base asigning to each value of the interval upon which the function is periodic the difference value. The period vector corresponds to f(x) - x where x belongs to [0, base-1], with base being the length of period.
         """
-        super().__init__(anchor, len(period))
+        self._base = len(period)
+        super().__init__(anchor, self._base)
         self.period = period
+        
 
 
     def eval_diff(self, arg) : 
         """! Evaluates f(x) - x, where f is this periodic transform 
         
         @param arg The argument given to the periodic transform. This can be eather a number or a numpy array."""
-        return self.period[(arg + self.anchor) % self.base]
+        return self.period[(arg + self.anchor) % self._base]
     
     def __rshift__(self, other): 
         """! Combine two periodic transforms. Notice that this is *not* the composition of two periodic transformations.

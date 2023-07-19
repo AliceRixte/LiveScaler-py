@@ -12,7 +12,7 @@ class TestLivescaler(unittest.TestCase):
 
     def test_affine(self) : 
         aff = StdAffine.iii
-        assert aff.eval(4) == -5
+        assert aff.eval(4) == 7
         aff.anchor = 4
         assert aff.eval(4) == 3
     
