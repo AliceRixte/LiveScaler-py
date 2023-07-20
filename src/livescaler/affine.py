@@ -15,17 +15,18 @@
 #
 # Copyright (c) Alice Rixte.  All rights reserved.
 
-from .transform import Transform
+from .transform import Transform, FoldInterval
 
 class Affine(Transform): 
     """! The Affine class allows to declare affine transformations. For more informations about affine transformations, see section 2.3 of this paper https://jim2023.sciencesconf.org/data/pages/3_4_RIXTE.pdf (in french)."""
-    def __init__(self, mult, transp, anchor = 0, base = 12)  : 
+    def __init__(self, mult, transp, anchor = 0, 
+                 fold_interval = FoldInterval(12.0, -4.5, 7.5))  : 
         """! The Affine initializer
         @param mult The multiplicator coefficient of the affine transform
         @param transp The transposition parameter of the affine transform
         @return  An affine transformation.
         """
-        super().__init__(anchor, base)
+        super().__init__(anchor, fold_interval)
         self.mult = mult
         self.transp = transp
 
@@ -44,7 +45,7 @@ class Affine(Transform):
         return Affine(newmult, newtransp)
     
     def __str__(self) : 
-        return f"[mult : {self.mult}, transp : {self.transp}, anchor : {self.anchor}, base : {self.base}]"
+        return f"[mult : {self.mult}, transp : {self.transp}, anchor : {self.anchor}, interval : {self.fold_interval}]"
 
 class StdAffine : 
     """! StdAffine defines some of the most used affine transforms."""

@@ -23,7 +23,7 @@ class FoldInterval :
     self._descend = 0
     self._ascend = 0
     self._span = 0
-    self.setBounds(max_descend_diff, max_ascend_diff)
+    self.set_bounds(max_descend_diff, max_ascend_diff)
     
 
   """! This sets the minimal and maximal intervals between a note and it's transformation. If the interval length `max_diff - min_diff ` is not a multiple of the base, the resulting FoldInterval will be bigger : its length will be rounded to the next base multiple and the initial interval will be centered in that bigger interval.
@@ -31,7 +31,7 @@ class FoldInterval :
   @param max_descend_diff The maximal descending interval allowed between a note and its transformed version. In most use cases this should be negative.
   @param max_ascend_diff The maximal ascending interval allowed between a note and its transformed version. In most use cases this should be positive."""
 
-  def setBounds(self, max_descend_diff, max_ascend_diff) : 
+  def set_bounds(self, max_descend_diff, max_ascend_diff) : 
     if max_ascend_diff < max_descend_diff : 
       max_descend_diff, max_ascend_diff = max_descend_diff, max_ascend_diff
     interval = max_ascend_diff - max_descend_diff
@@ -68,3 +68,6 @@ class FoldInterval :
   @param diff Interval between a note and its transform."""
   def fold(self, diff) : 
     return self._descend + (diff - self._descend) % self._span
+  
+  def __str__(self) :
+    return f"[base : {self._base}, descend : {self._descend}, ascend : {self.ascend}]"

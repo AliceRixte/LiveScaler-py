@@ -17,16 +17,17 @@
 
 import numpy as np
 
-from .transform import Transform
+from .transform import Transform, FoldInterval
 
 class Periodic(Transform) : 
     """! The Periodic class allows to declare periodic with respect to an intervam transformations. For more informations about these transformations, see section 2.2 of this paper https://jim2023.sciencesconf.org/data/pages/3_4_RIXTE.pdf (in french)."""
-    def __init__(self, period, anchor = 0) : 
+    def __init__(self, period, anchor = 0, max_descend_diff = -4.5, max_ascend_diff = 7.5) : 
         """! The Affine initializer
         @param period A vector of the size of the base asigning to each value of the interval upon which the function is periodic the difference value. The period vector corresponds to f(x) - x where x belongs to [0, base-1], with base being the length of period.
         """
-        self._base = len(period)
-        super().__init__(anchor, self._base)
+        super().__init__(anchor, FoldInterval(len(period),
+                                              max_descend_diff,
+                                              max_ascend_diff))
         self.period = period
         
 
@@ -35,7 +36,7 @@ class Periodic(Transform) :
         """! Evaluates f(x) - x, where f is this periodic transform 
         
         @param arg The argument given to the periodic transform. This can be eather a number or a numpy array."""
-        return self.period[(arg + self.anchor) % self._base]
+        return self.period[(arg + self.anchor) % self.fold_interval.base]
     
     def __rshift__(self, other): 
         """! Combine two periodic transforms. Notice that this is *not* the composition of two periodic transformations.
@@ -46,7 +47,7 @@ class Periodic(Transform) :
         return Periodic(newperiod,other.anchor)
     
     def __str__(self) : 
-        return f"[period : {self.period}, anchor : {self.anchor}, base : {self.base}]"
+        return f"[period : {self.period}, anchor : {self.anchor}, interval : {self.fold_interval}]"
 
 
 class StdPeriodic :
